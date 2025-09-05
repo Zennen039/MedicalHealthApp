@@ -1,0 +1,50 @@
+{% extends 'admin/master.html' %}
+
+{% block title %}Trang quản trị{% endblock %}
+
+{% block body %}
+
+{% if current_user.is_authenticated %}
+<div class="container mt-4">
+    <h1 class="text-center text-primary">TDA Clinic</h1>
+    <p class="text-center">Chào mừng <strong>{{ current_user.full_name }}</strong> đến trang quản trị!</p>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Quản lý Chuyên khoa</h5>
+                    <p class="card-text">Thêm, sửa, xóa và quản lý các chuyên khoa.</p>
+                    <a href="{{ url_for('specialty.index_view') }}" class="btn btn-primary">Đi đến</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Quản lý Bác sĩ</h5>
+                    <p class="card-text">Xem danh sách và xác minh bác sĩ.</p>
+                    <a href="" class="btn btn-success">Đi đến</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Quản lý Người dùng</h5>
+                    <p class="card-text">Quản lý thông tin người dùng hệ thống.</p>
+                    <a href="{{ url_for('user.index_view') }}" class="btn btn-warning">Đi đến</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{{ url_for('logoutview.index') }}" class="btn btn-danger">Đăng xuất</a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="/">
+            🏥 HealthCare
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+
+                {% if current_user.is_authenticated %}
+                {% if current_user.user_role.value == 3 %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">📊 Quản trị</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">🧾 Quản lý chuyên khoa</a>
+                </li>
+
+                {% elif current_user.user_role.value == 2 %}
+                <li class="nav-item">
+                    <a class="nav-link" href="">👨‍⚕️ Dashboard Bác sĩ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">📅 Lịch làm việc</a>
+                </li>
+
+                {% elif current_user.user_role.value == 1 %}
+                <li class="nav-item">
+                    <a class="nav-link" href="">👤 Dashboard Bệnh nhân</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">📝 Đặt lịch khám</a>
+                </li>
+                {% endif %}
+                {% endif %}
+
+            </ul>
+
+            <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+            <span class="navbar-text me-3">
+              Xin chào, {{ current_user.full_name }}
+            </span>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-light" href="/logout">Đăng xuất</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-light me-2" href="/login">Đăng nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-warning" href="/register">Đăng ký</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
