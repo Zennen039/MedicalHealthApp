@@ -10,16 +10,6 @@ def index():
     return render_template('index.html')
 
 
-def admin_required(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        if current_user.is_authenticated or current_user.user_role != UserRole.ADMIN:
-            return redirect('/login')
-        return f(*args, **kwargs)
-
-    return wrapper
-
-
 @app.route('/admin', methods=['POST'])
 def admin_login():
     return render_template('admin/index.html')
@@ -28,33 +18,6 @@ def admin_login():
 @login.user_loader
 def get_user(user_id):
     return dao.get_user_by_id(user_id)
-
-
-@app.route('/profile')
-@login_required
-@admin_required
-def profile():
-    doctors = DoctorProfile.query.all()
-
-    return render_template('admin/index.html', doctors=doctors)
-
-
-@app.route('/verify/<int:doctor_id>')
-@login_required
-@admin_required
-def verify_doctor(doctor_id):
-    doc = DoctorProfile.query.get_or_404(doctor_id)
-
-    if not doc.is_verified:
-        doc.is_verified = True
-
-        db.session.commit()
-
-        flash(f'✅ Bác sĩ {doc.full_name} đã được xác nhận thành công!', 'success')
-    else:
-        flash(f'ℹ️ Bác sĩ {doc.full_name} đã được xác nhận trước đó.', 'info')
-
-    return redirect(url_for('profile'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -91,6 +54,7 @@ def register():
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
         user_role = request.form.get('user_role')
+        license_profile = request.files.get('license_profile')
 
         if User.query.filter_by(username=username).first():
             flash('Username đã tồn tại!', 'danger')
@@ -106,7 +70,6 @@ def register():
                          date_of_birth=date_of_birth, phone=phone, email=email, password=password, user_role=user_role)
 
         if user_role == UserRole.DOCTOR:
-            license_profile = request.form.get('license_profile')
 
             doctor = DoctorProfile(user_id=u.id, license_profile=license_profile)
 

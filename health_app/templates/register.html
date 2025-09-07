@@ -1,71 +1,76 @@
 {% extends 'layout/base.html' %}
 
 {% block content %}
-<h2 class="text-center text-info mt-1">Đăng ký</h2>
+<div class="d-flex justify-content-center align-items-center" style="min-height:100vh;">
+    <div class="card shadow p-4" style="width:450px;">
+        <h4 class="text-center mb-3">Đăng ký</h4>
 
-<form method="post">
-    <div class="form-floating mb-3 mt-3">
-        <input type="text" class="form-control" id="full_name" placeholder="Nhập họ và tên" name="full_name"/>
-        <label for="full_name">Họ và tên</label>
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label">Họ và tên</label>
+                <input type="text" name="full_name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Địa chỉ</label>
+                <input type="text" name="address" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Giới tính</label>
+                <select name="gender" class="form-select" required>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Sinh nhật</label>
+                <input type="date" name="date_of_birth" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Tên đăng nhập</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Số điện thoại</label>
+                <input pattern="[0]{1}[0-9]{9}" type="text" name="phone" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Xác nhận mật khẩu</label>
+                <input type="password" name="confirm_password" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Vai trò</label>
+                <select name="user_role" class="form-select" required>
+                    <option value="PATIENT">Bệnh nhân</option>
+                    <option value="DOCTOR">Bác sĩ</option>
+                </select>
+            </div>
+
+            <div class="mb-3 d-none" id="license_profile">
+                <label class="form-label">Giấy phép hành nghề (nếu chọn bác sĩ)</label>
+                <input type="file" name="license_profile" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Đăng ký</button>
+        </form>
+        <hr>
+        <p class="text-center small mb-0">Đã có tài khoản? <a href="/login">Đăng nhập</a></p>
     </div>
-
-    <div class="form-floating mb-3 mt-3">
-        <input type="date" class="form-control" id="date_of_birth" placeholder="Nhập sinh nhật" name="date_of_birth"/>
-        <label for="date_of_birth">Sinh nhật</label>
-    </div>
-
-    <div class="mt-3 mb-3">
-        <select class="form-select" name="gender" required>
-            <option>--Chọn giới tính--</option>
-            <option value="Nam">Nam</option>
-            <option value="Nữ">Nữ</option>
-        </select>
-    </div>
-
-    <div class="form-floating mb-3 mt-3">
-        <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ" name="address"/>
-        <label for="address">Địa chỉ</label>
-    </div>
-
-    <div class="form-floating mb-3 mt-3">
-        <input type="email" class="form-control" id="email" placeholder="Nhập email" name="email"/>
-        <label for="email">Email</label>
-    </div>
-
-    <div class="form-floating mb-3 mt-3">
-        <input pattern="[0]{1}[0-9]{9}" type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại"
-               name="phone"/>
-        <label for="phone">Số điện thoại</label>
-    </div>
-
-    <div class="form-floating mb-3 mt-3">
-        <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập" name="username"/>
-        <label for="username">Tên đăng nhập</label>
-    </div>
-
-    <div class="form-floating mt-3 mb-3">
-        <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" name="password">
-        <label for="password">Mật khẩu</label>
-    </div>
-
-    <div class="form-floating mt-3 mb-3">
-        <input type="password" class="form-control" id="confirm_password" placeholder="Xác nhận mật khẩu"
-               name="confirm_password">
-        <label for="confirm_password">Xác nhận mật khẩu</label>
-    </div>
-
-    <div class="mt-3 mb-3">
-        <select class="form-select" name="user_role" required>
-            <option>--Chọn vai trò--</option>
-            <option value="PATIENT">Bệnh nhân</option>
-            <option value="DOCTOR">Bác sĩ</option>
-        </select>
-    </div>
-
-    <br>Nếu là bác sĩ: License <input type="text" name="license_profile"/>
-
-    <div class="form-floating mt-3 mb-3">
-        <button class="btn btn-success">Đăng ký</button>
-    </div>
-</form>
+</div>
 {% endblock %}
