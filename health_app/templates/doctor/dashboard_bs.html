@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ Bác sĩ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor.css') }}">
+</head>
+<body>
+{% set current_path = request.path %}
+<div class="dashboard-container">
+    <div class="sidebar">
+    <h2>MEDICAL SCHEDULE SYSTEM</h2>
+
+    <a href="{{ url_for('doctor.dashboard') }}"
+       class="{% if current_path == url_for('doctor.dashboard') %}active{% endif %}">
+       Trang chủ
+    </a>
+
+    <a href="{{ url_for('doctor.dashboard') }}schedule"
+       class="{% if current_path == url_for('doctor.dashboard') ~ 'schedule' %}active{% endif %}">
+       Lịch làm việc
+    </a>
+
+    <a href="{{ url_for('doctor.dashboard') }}profile"
+       class="{% if current_path == url_for('doctor.dashboard') ~ 'profile' %}active{% endif %}">
+       Hồ sơ cá nhân
+    </a>
+
+    <a href="{{ url_for('doctor.dashboard') }}appointments"
+       class="{% if current_path == url_for('doctor.dashboard') ~ 'appointments' %}active{% endif %}">
+       Thông báo cuộc hẹn
+    </a>
+
+    <a href="{{ url_for('doctor.dashboard') }}patients"
+       class="{% if current_path == url_for('doctor.dashboard') ~ 'patients' %}active{% endif %}">
+       Hồ sơ bệnh nhân
+    </a>
+
+    <a href="{{ url_for('doctor.dashboard') }}feedback"
+       class="{% if current_path == url_for('doctor.dashboard') ~ 'feedback' %}active{% endif %}">
+       Phản hồi đánh giá
+    </a>
+
+    <a href="{{ url_for('logout') }}" class="logout">Đăng xuất</a>
+</div>
+
+    <div class="main">
+        <div class="topbar">
+            <span>Xin chào, {{ doctor_name }}</span>
+            <input type="text" placeholder="Tìm kiếm...">
+            <label>Ngôn ngữ: Tiếng Việt</label>
+        </div>
+
+        <div class="widgets">
+            <div class="card pink">Tổng số bệnh nhân hôm nay: {{ total_today }}</div>
+            <div class="card green">Số ca khám sắp tới: {{ upcoming }}</div>
+            <div class="card red">Cuộc hẹn chưa xác nhận: {{ unconfirmed }}</div>
+            <div class="card blue">Đánh giá trung bình: {{ avg_rating }}</div>
+        </div>
+
+        <div class="appointments">
+            <h3>Thông báo nhanh các cuộc hẹn</h3>
+            <table>
+                <tr>
+                    <th>Thời gian</th>
+                    <th>Bệnh nhân</th>
+                    <th>Trạng thái</th>
+                </tr>
+                {% for app in appointments %}
+                <tr>
+                    <td>{{ app.time }}</td>
+                    <td>{{ app.patient }}</td>
+                    <td>{{ app.status }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
